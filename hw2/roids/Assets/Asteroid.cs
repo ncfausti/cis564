@@ -5,6 +5,8 @@ public class Asteroid : MonoBehaviour {
 
 	public GameObject deathExplosion;
 	public int pointValue;
+	public AudioClip deathKnell;
+
 	// Use this for initialization
 	void Start () {
 		pointValue = 10;
@@ -27,6 +29,7 @@ public class Asteroid : MonoBehaviour {
 		 * down the Y axis, we rotate the particle system so 
 		 * that it flys in the right way.
 		 */
+		//AudioSource.PlayClipAtPoint(deathKnell, gameObject.transform.position );
 
 		Instantiate (deathExplosion, gameObject.transform.position, 
 		             Quaternion.AngleAxis (-90, Vector3.right) );
