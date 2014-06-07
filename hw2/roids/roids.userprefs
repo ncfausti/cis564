@@ -1,12 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Asteroid.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Global.cs">
     <Files>
-      <File FileName="Assets/Ship.cs" Line="61" Column="4" />
-      <File FileName="Assets/Asteroid.cs" Line="33" Column="3" />
+      <File FileName="Assets/Global.cs" Line="32" Column="1" />
+      <File FileName="Assets/Ship.cs" Line="54" Column="1" />
       <File FileName="Assets/Bullet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Global.cs" Line="38" Column="1" />
-      <File FileName="Assets/ScoreUI.cs" Line="13" Column="21" />
+      <File FileName="Assets/TitleScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Asteroid.cs" Line="1" Column="1" />
+      <File FileName="Assets/ScoreUI.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

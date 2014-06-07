@@ -13,8 +13,8 @@ public class Global : MonoBehaviour {
 	void Start () {
 		score = 0;
 		timer = 0;
-		spawnPeriod = 5.0f;
-		numberSpawnedEachPeriod = 3;
+		spawnPeriod = 1.0f;
+		numberSpawnedEachPeriod = 15;
 		/*
               So here's a design point to consider:
 - is the gameplay constrained by the screen size in any particular way?
@@ -35,11 +35,16 @@ we're mainly interested in what the Y value of 0 maps to in the camera's depth.
 						}
 						float horizontalPos = Random.Range (0.0f, width);
 						float verticalPos = Random.Range (0.0f, height);
-						Instantiate (objToSpawn,
-			            Camera.main.ScreenToWorldPoint (
-				new Vector3 (horizontalPos, verticalPos, originInScreenCoords.z)), Quaternion.identity);
-						/* if you want to verify that this method works, uncomment this code. What will happen when it runs is that one object will be spawned at each corner of the screen, regardless of the size of the screen. If you pause the Scene and inspect each object, you will see that each has a Y- coordinate value of 0.
-*/
+						
+						// if being created after getting shot create multiple
+						
+								Instantiate (objToSpawn, Camera.main.ScreenToWorldPoint (
+										new Vector3 (horizontalPos, verticalPos, originInScreenCoords.z)), Quaternion.identity);
+						
+						/* if you want to verify that this method works, uncomment this code. What will 
+						 * happen when it runs is that one object will be spawned at each corner of the 
+						 * screen, regardless of the size of the screen. If you pause the Scene and 
+						 * inspect each object, you will see that each has a Y- coordinate value of 0.
 						/*
 						Vector3 botLeft = new Vector3(0,0,originInScreenCoords.z); Vector3 botRight = new Vector3(width, 0,
 						                                    originInScreenCoords.z);

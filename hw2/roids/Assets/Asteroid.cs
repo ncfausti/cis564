@@ -6,10 +6,22 @@ public class Asteroid : MonoBehaviour {
 	public GameObject deathExplosion;
 	public int pointValue;
 	public AudioClip deathKnell;
+	public Vector3 speed;
+	public Quaternion heading;
+	public bool isFragment;
 
 	// Use this for initialization
 	void Start () {
 		pointValue = 10;
+		speed.x = 50.0f;
+
+		heading.z = Random.Range (-180.0f, 180.0f);
+		heading.x = Random.Range(0.0f, 360.0f);
+
+		// set the direction it will travel in
+		gameObject.rigidbody.MoveRotation(heading);
+		gameObject.rigidbody.AddRelativeForce (speed);
+		
 	}
 	
 	// Update is called once per frame
@@ -37,7 +49,7 @@ public class Asteroid : MonoBehaviour {
 		GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
 		g.score += pointValue;
-		
+
 		Destroy (gameObject);
 
 	}
