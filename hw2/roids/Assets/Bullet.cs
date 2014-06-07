@@ -38,22 +38,6 @@ public class Bullet : MonoBehaviour {
 
 		if ( collider.CompareTag("Asteroids") ){
 			Asteroid roid = collider.gameObject.GetComponent< Asteroid >();
-			Vector3 cp = collision.contacts[0].point;
-			// if not tiny asteroids, create asteroid particles
-
-			float width = Camera.main.GetScreenWidth ();
-			float height = Camera.main.GetScreenHeight ();
-			float horizontalPos = Random.Range (0.0f, width);
-			float verticalPos = Random.Range (0.0f, height);
-			
-
-			// Should move this to asteroidCluster object and just instantiate that here instead
-			for(int i = 0; i < 3; i++){
-			Instantiate (roid, Camera.main.ScreenToWorldPoint (
-					new Vector3(cp[0],cp[1],cp[2])
-						
-						), Quaternion.identity);
-					}
 
 			// let the other object handle its own death throes
 			roid.Die ();

@@ -13,7 +13,7 @@ public class Global : MonoBehaviour {
 	void Start () {
 		score = 0;
 		timer = 0;
-		spawnPeriod = 1.0f;
+		spawnPeriod = 2.0f;
 		numberSpawnedEachPeriod = 15;
 		/*
               So here's a design point to consider:

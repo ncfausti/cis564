@@ -50,6 +50,28 @@ public class Asteroid : MonoBehaviour {
 		Global g = obj.GetComponent<Global>();
 		g.score += pointValue;
 
+		// If larger than some size instantiate AsteroidCluster/3 smaller asteroids
+		Asteroid roid = gameObject.GetComponent< Asteroid >();
+		Vector3 cp = gameObject.transform.position;
+
+
+		//Debug.Log ("xyz " + cp[0] +"|"+cp[1]+"|"+ cp[2]);
+
+		for(int i = 0; i < 3; i++){
+			Instantiate (roid, 
+				new Vector3(cp[0] + (10 * i) ,cp[1] + (10 * i),0.0002441406f)
+				, Quaternion.identity);
+				
+		//	roid.transform.localScale.x = .25f;
+		//	roid.transform.localScale.z = .25f;
+				
+			//Debug.Log (roid.ToString());
+		}
+
+
+		// end three asteroid instantiation
+
+
 		Destroy (gameObject);
 
 	}
