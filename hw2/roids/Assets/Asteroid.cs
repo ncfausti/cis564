@@ -58,8 +58,9 @@ public class Asteroid : MonoBehaviour {
 		//Debug.Log ("xyz " + cp[0] +"|"+cp[1]+"|"+ cp[2]);
 
 		for(int i = 0; i < 3; i++){
+			Debug.Log ("COORDS: " + cp.x + " | " + cp.y + " | " + cp.z);
 			Instantiate (roid, 
-				new Vector3(cp[0] + (10 * i) ,cp[1] + (10 * i),0.0002441406f)
+			             new Vector3(cp.x + (2.0f * i),cp.y, cp.z  + (2.0f * i))
 				, Quaternion.identity);
 				
 		//	roid.transform.localScale.x = .25f;
