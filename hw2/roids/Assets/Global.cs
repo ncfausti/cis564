@@ -4,11 +4,15 @@ using System.Collections;
 public class Global : MonoBehaviour {
 
 	public GameObject objToSpawn;
+	public GameObject smallAsteroid;
+	public GameObject smallAsteroid2;
+	public GameObject smallAsteroid3;
 	public float timer;
 	public float spawnPeriod;
 	public int numberSpawnedEachPeriod;
 	public Vector3 originInScreenCoords;
 	public int score;
+
 	// Use this for initialization
 	void Start () {
 		score = 0;
@@ -36,10 +40,9 @@ we're mainly interested in what the Y value of 0 maps to in the camera's depth.
 						float horizontalPos = Random.Range (0.0f, width);
 						float verticalPos = Random.Range (0.0f, height);
 						
-						// if being created after getting shot create multiple
 						
-								Instantiate (objToSpawn, Camera.main.ScreenToWorldPoint (
-										new Vector3 (horizontalPos, verticalPos, originInScreenCoords.z)), Quaternion.identity);
+						Instantiate (objToSpawn, Camera.main.ScreenToWorldPoint (
+							new Vector3 (horizontalPos, verticalPos, originInScreenCoords.z)), Quaternion.identity);
 						
 						/* if you want to verify that this method works, uncomment this code. What will 
 						 * happen when it runs is that one object will be spawned at each corner of the 
@@ -58,4 +61,16 @@ we're mainly interested in what the Y value of 0 maps to in the camera's depth.
 						*/
 				}
 		}
+
+	public void spawnAsteroidPiecesAtPosition(Vector3 position) {
+		Debug.Log ("SPAWNING ASTEROID PIECES");
+		Debug.Log ("Position: " + position.ToString ());
+
+		// Spawn three small asteroids
+		for (int i = 0; i < 3; i++) {
+			Vector3 newPos = new Vector3(position.x + (i*20), position.y + (i*20), position.z + (i*20) );
+						Instantiate (smallAsteroid, position, Quaternion.identity);
+				}
+
+	}
 }

@@ -9,6 +9,7 @@ public class Ship : MonoBehaviour {
 	public float rotationSpeed;
 	public float rotation;
 	public GameObject bullet; // the GameObject to spawn
+	
 
 	// Use this for initialization
 	void Start () {
@@ -42,6 +43,11 @@ public class Ship : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		// Lock y plane to 0 for debugging until I implement ship.die()
+		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+		
+	
 		if(Input.GetButtonDown("Fire1"))
 		{
 			/* we don’t want to spawn a Bullet inside our ship, so some Simple trigonometry is done here to spawn the bullet at the tip of where the ship is pointed.
@@ -59,9 +65,9 @@ public class Ship : MonoBehaviour {
 
 			// set the direction the Bullet will travel in
 			Quaternion rot = Quaternion.Euler(new Vector3(0,rotation,0));
-			
+
 			b.heading = rot;
-			Debug.Log ("Fire! " + rotation);
+//			Debug.Log ("Fire! " + rotation);
 			
 		}
 	}

@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour {
 	public Vector3 thrust;
 	public Quaternion heading;
 	public Vector3 origin = Camera.main.WorldToScreenPoint(new Vector3(0,0,0));
+	public Asteroid smallRoid;
+	Global globalObj;
 	
 
 
@@ -39,11 +41,15 @@ public class Bullet : MonoBehaviour {
 		if ( collider.CompareTag("Asteroids") ){
 			Asteroid roid = collider.gameObject.GetComponent< Asteroid >();
 
+			GameObject g = GameObject.Find ("GlobalObject");
+			globalObj = g.GetComponent< Global >();
+
+			// If small asteroid, just die() without creating new asteroids, else create 3 new small asteroids
+			if (roid.transform.localScale.x.ToString () != "0.5")
+				globalObj.spawnAsteroidPiecesAtPosition(roid.transform.localPosition);
+
 			// let the other object handle its own death throes
 			roid.Die ();
-
-
-
 
 			// Destroy the Bulletwhich collided with the Asteroid
 			Destroy (gameObject);

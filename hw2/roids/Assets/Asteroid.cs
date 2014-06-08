@@ -9,6 +9,9 @@ public class Asteroid : MonoBehaviour {
 	public Vector3 speed;
 	public Quaternion heading;
 	public bool isFragment;
+	//float lockPosition = 0;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +29,8 @@ public class Asteroid : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+		transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 	}
 
 	public void Die(){
@@ -51,29 +55,15 @@ public class Asteroid : MonoBehaviour {
 		g.score += pointValue;
 
 		// If larger than some size instantiate AsteroidCluster/3 smaller asteroids
-		Asteroid roid = gameObject.GetComponent< Asteroid >();
-		Vector3 cp = gameObject.transform.position;
+	//	Asteroid roid = gameObject.GetComponent< Asteroid >();
+//		GameObject smallRoid = Instantiate(Resources.Load("SmallAsteroidPrefab")) as GameObject;
 
-
-		//Debug.Log ("xyz " + cp[0] +"|"+cp[1]+"|"+ cp[2]);
-
-		for(int i = 0; i < 3; i++){
-			Debug.Log ("COORDS: " + cp.x + " | " + cp.y + " | " + cp.z);
-			Instantiate (roid, 
-			             new Vector3(cp.x + (2.0f * i),cp.y, cp.z  + (2.0f * i))
-				, Quaternion.identity);
-				
-		//	roid.transform.localScale.x = .25f;
-		//	roid.transform.localScale.z = .25f;
-				
-			//Debug.Log (roid.ToString());
-		}
-
+		Destroy (gameObject);
+		
 
 		// end three asteroid instantiation
 
 
-		Destroy (gameObject);
 
 	}
 }
