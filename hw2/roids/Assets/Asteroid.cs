@@ -29,6 +29,7 @@ public class Asteroid : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// Lock asteroids to y = 0 plane
 		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 		transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 	}
@@ -54,16 +55,7 @@ public class Asteroid : MonoBehaviour {
 		Global g = obj.GetComponent<Global>();
 		g.score += pointValue;
 
-		// If larger than some size instantiate AsteroidCluster/3 smaller asteroids
-	//	Asteroid roid = gameObject.GetComponent< Asteroid >();
-//		GameObject smallRoid = Instantiate(Resources.Load("SmallAsteroidPrefab")) as GameObject;
-
 		Destroy (gameObject);
-		
-
-		// end three asteroid instantiation
-
-
 
 	}
 }

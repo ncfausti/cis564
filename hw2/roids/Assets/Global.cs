@@ -68,8 +68,8 @@ we're mainly interested in what the Y value of 0 maps to in the camera's depth.
 
 		// Spawn three small asteroids
 		for (int i = 0; i < 3; i++) {
-			Vector3 newPos = new Vector3(position.x + (i*20), position.y + (i*20), position.z + (i*20) );
-						Instantiate (smallAsteroid, position, Quaternion.identity);
+			Vector3 newPos = new Vector3(position.x + (i*1), position.y + (i*1), position.z + (i*1) );
+						Instantiate (smallAsteroid, newPos, Quaternion.identity);
 				}
 
 	}
