@@ -13,6 +13,7 @@ public class Global : MonoBehaviour {
 	public Vector3 originInScreenCoords;
 	public int score;
 	public int topScore;
+	public int currentLevel;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,7 @@ public class Global : MonoBehaviour {
 		timer = 0;
 		spawnPeriod = 2.0f;
 		numberSpawnedEachPeriod = 15;
+		currentLevel = 1;
 		/*
               So here's a design point to consider:
 - is the gameplay constrained by the screen size in any particular way?
@@ -28,22 +30,25 @@ we're mainly interested in what the Y value of 0 maps to in the camera's depth.
 */
 		originInScreenCoords =
 			Camera.main.WorldToScreenPoint(new Vector3(0,0,0));
+
+		startNewLevel(1);
+
 	}
 	// Update is called once per frame
 	void Update () {
 				timer += Time.deltaTime;
 				if (timer > spawnPeriod) {
 						timer = 0;
-						float width = Camera.main.GetScreenWidth ();
-						float height = Camera.main.GetScreenHeight ();
-						for (int i = 0; i < numberSpawnedEachPeriod; i++) {
-						}
-						float horizontalPos = Random.Range (0.0f, width);
-						float verticalPos = Random.Range (0.0f, height);
+			//			float width = Camera.main.GetScreenWidth ();
+			//			float height = Camera.main.GetScreenHeight ();
+					//	for (int i = 0; i < numberSpawnedEachPeriod; i++) {
+					//	}
+			//			float horizontalPos = Random.Range (0.0f, width);
+			//			float verticalPos = Random.Range (0.0f, height);
 						
-						
-				//		Instantiate (objToSpawn, Camera.main.ScreenToWorldPoint (
+					//	Instantiate (objToSpawn, Camera.main.ScreenToWorldPoint (
 					//		new Vector3 (horizontalPos, verticalPos, originInScreenCoords.z)), Quaternion.identity);
+						
 						
 						/* if you want to verify that this method works, uncomment this code. What will 
 						 * happen when it runs is that one object will be spawned at each corner of the 
@@ -61,7 +66,24 @@ we're mainly interested in what the Y value of 0 maps to in the camera's depth.
 						Instantiate(objToSpawn, Camera.main.ScreenToWorldPoint(botRight), Quaternion.identity );
 						*/
 				}
+
+			
 		}
+
+	void startNewLevel(int level) {
+
+		float width = Camera.main.GetScreenWidth ();
+		float height = Camera.main.GetScreenHeight ();
+		for (int i = 0; i < numberSpawnedEachPeriod; i++) {
+		}
+		float horizontalPos = Random.Range (0.0f, width);
+		float verticalPos = Random.Range (0.0f, height);
+
+		for (int i = 0; i < level; i++) {
+				Instantiate (objToSpawn, Camera.main.ScreenToWorldPoint (
+					new Vector3 (horizontalPos, verticalPos, originInScreenCoords.z)), Quaternion.identity);
+				}
+	}
 
 	public void spawnAsteroidPiecesAtPosition(Vector3 position) {
 		Debug.Log ("SPAWNING ASTEROID PIECES");
