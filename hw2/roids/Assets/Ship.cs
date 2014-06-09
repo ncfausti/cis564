@@ -14,7 +14,6 @@ public class Ship : MonoBehaviour {
 	public float timeToWaitBetweenShots;
 	public float timeInvincible;
 	public bool isInvincible;
-	private bool isDead;
 	
 
 	// Use this for initialization
@@ -56,35 +55,20 @@ public class Ship : MonoBehaviour {
 			gameObject.rigidbody.MoveRotation(rot); 
 			//gameObject.transform.Rotate(0, -2.0f, 0.0f );
 		}
-
-		if (isDead) {
-			while(timeInvincible > 3.0f){
-				gameObject.transform.position = new Vector3 (10000, 10000, 10000);
-				timeInvincible -= Time.deltaTime;	
-			}
-				gameObject.transform.position = new Vector3 (0, 0, 0);
-			while(timeInvincible > 0.0f){
-				isInvincible = true;
-				timeInvincible -= Time.deltaTime;
-			}
-			isInvincible = false;
-		}
-
 	}
 
 	void OnTriggerEnter(Collider collider) {
 		if ( (collider.tag != "Bullet") && !collider.tag.Contains("Wall") ) {
 
-			Debug.Log (collider.tag);
-					Debug.Log ("Ship got hit");
+				Debug.Log (collider.tag);
+				Debug.Log ("Ship got hit");
+				
 				if(!isInvincible)
 					Die();
 				}
 		}
 
 	public void Die(){
-		isDead = true;
-
 		GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
 		g.livesLeft -= 1;
@@ -92,18 +76,19 @@ public class Ship : MonoBehaviour {
 		if (--g.livesLeft < 0) {
 						// gameover
 						// bring up high score/game over menu
-				} 
-		else {
-		
-			// Move player off screen for a few seconds then bring back
-			gameObject.transform.position = new Vector3(10000,10000,10000);
-
-			timeInvincible = 6.0f;
-			isInvincible = true;
-			
+				} else {
+			g.respawnCountdown = 3.0f;
+			g.justSpawned = false;
+			Destroy(gameObject);
+							
 		}
 	}
-	
+
+	//void OnCollisionEnter(Collision collision) {
+	//	Debug.Log ("Collided with: " + collision.collider.tag);
+	//	Destroy (gameObject);
+	//}
+
 	// Update is called once per frame
 	void Update () {
 
