@@ -41,8 +41,8 @@ we're mainly interested in what the Y value of 0 maps to in the camera's depth.
 						float verticalPos = Random.Range (0.0f, height);
 						
 						
-						Instantiate (objToSpawn, Camera.main.ScreenToWorldPoint (
-							new Vector3 (horizontalPos, verticalPos, originInScreenCoords.z)), Quaternion.identity);
+					//	Instantiate (objToSpawn, Camera.main.ScreenToWorldPoint (
+					//		new Vector3 (horizontalPos, verticalPos, originInScreenCoords.z)), Quaternion.identity);
 						
 						/* if you want to verify that this method works, uncomment this code. What will 
 						 * happen when it runs is that one object will be spawned at each corner of the 

@@ -6,7 +6,6 @@ public class Bullet : MonoBehaviour {
 	public Vector3 thrust;
 	public Quaternion heading;
 	public Vector3 origin = Camera.main.WorldToScreenPoint(new Vector3(0,0,0));
-	public Asteroid smallRoid;
 	Global globalObj;
 	
 
@@ -14,7 +13,7 @@ public class Bullet : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// travel straight in the X-axis
-		thrust.x = 400.0f;
+		thrust.x = 700.0f;
 
 		// do not passively decelerate
 		gameObject.rigidbody.drag = 0;
@@ -25,6 +24,8 @@ public class Bullet : MonoBehaviour {
 		// apply thrust once, no need to apply it again since
 		// it will not decelerate
 		gameObject.rigidbody.AddRelativeForce (thrust);
+
+		Destroy (gameObject, 3.0f);
 	}
 	
 	// Update is called once per frame
