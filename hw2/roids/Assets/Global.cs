@@ -5,6 +5,7 @@ public class Global : MonoBehaviour {
 
 	public GameObject objToSpawn;
 	public GameObject smallAsteroid;
+	public GameObject ship;
 	public float timer;
 	public float spawnPeriod;
 	public int numberSpawnedEachPeriod;
@@ -13,6 +14,11 @@ public class Global : MonoBehaviour {
 	public int topScore;
 	public int currentLevel;
 	public int totalAsteroids;
+	public int livesLeft;
+	public bool hasDied;
+	public float width;
+	public float height;
+
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +27,10 @@ public class Global : MonoBehaviour {
 		spawnPeriod = 2.0f;
 		numberSpawnedEachPeriod = 15;
 		currentLevel = 1;
+		livesLeft = 3;
+
+		width = Camera.main.GetScreenWidth ();
+		height = Camera.main.GetScreenHeight ();
 
 		/*
               So here's a design point to consider:
@@ -32,6 +42,7 @@ public class Global : MonoBehaviour {
 			Camera.main.WorldToScreenPoint(new Vector3(0,0,0));
 
 		startNewLevel(1);
+
 
 	}
 	// Update is called once per frame
@@ -67,6 +78,13 @@ public class Global : MonoBehaviour {
 						*/
 				}
 
+
+		// if ship is currently not on the screen
+		// spawn new ship
+
+		if (!GameObject.Find("ShipPrefab"))
+			spawnShip();
+
 		// if all asteroids are gone, increment level and spawn "level" many asteroids
 		if (totalAsteroids == 0) {
 			startNewLevel (++currentLevel);
@@ -74,14 +92,6 @@ public class Global : MonoBehaviour {
 		}
 
 	void startNewLevel(int level) {
-
-		float width = Camera.main.GetScreenWidth ();
-		float height = Camera.main.GetScreenHeight ();
-
-	//	for (int i = 0; i < numberSpawnedEachPeriod; i++) {
-	//	}
-
-
 
 		for (int i = 0; i < level; i++) {
 
@@ -93,6 +103,12 @@ public class Global : MonoBehaviour {
 				
 				totalAsteroids += 1;
 		}
+
+	}
+
+	 void spawnShip() {
+		GameObject obj = Instantiate (ship, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
+		Ship s = obj.GetComponent<Ship>();
 
 	}
 

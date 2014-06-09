@@ -12,6 +12,9 @@ public class Ship : MonoBehaviour {
 	public float timer;
 	public float timeAtLastBulletFire;
 	public float timeToWaitBetweenShots;
+	public float timeInvincible;
+	public bool isInvincible;
+	private bool isDead;
 	
 
 	// Use this for initialization
@@ -20,11 +23,21 @@ public class Ship : MonoBehaviour {
 		forceVector.x = 5.0f;
 		rotationSpeed = 4.0f;
 		timeToWaitBetweenShots = .25f;  // 1/4 second
+		timeInvincible = 3.0f;
+		isInvincible = true;
+
 	}
 
 	// forced changes to rigid body physics parameters should be done through the FixedUpdate() method, not the Update() method
 	void FixedUpdate()
 	{
+		timeInvincible -= Time.deltaTime;
+
+		if(timeInvincible <= 0.0f) {
+			isInvincible = false;
+		//	gameObject.collider.isTrigger = false;
+		}
+
 		// force thruster
 		if( Input.GetAxisRaw("Vertical") > 0 )
 		{
@@ -43,6 +56,20 @@ public class Ship : MonoBehaviour {
 			gameObject.rigidbody.MoveRotation(rot); 
 			//gameObject.transform.Rotate(0, -2.0f, 0.0f );
 		}
+
+		if (isDead) {
+			while(timeInvincible > 3.0f){
+				gameObject.transform.position = new Vector3 (10000, 10000, 10000);
+				timeInvincible -= Time.deltaTime;	
+			}
+				gameObject.transform.position = new Vector3 (0, 0, 0);
+			while(timeInvincible > 0.0f){
+				isInvincible = true;
+				timeInvincible -= Time.deltaTime;
+			}
+			isInvincible = false;
+		}
+
 	}
 
 	void OnTriggerEnter(Collider collider) {
@@ -50,11 +77,33 @@ public class Ship : MonoBehaviour {
 
 			Debug.Log (collider.tag);
 					Debug.Log ("Ship got hit");
-
-			//		Destroy(gameObject);
+				if(!isInvincible)
+					Die();
 				}
 		}
 
+	public void Die(){
+		isDead = true;
+
+		GameObject obj = GameObject.Find("GlobalObject");
+		Global g = obj.GetComponent<Global>();
+		g.livesLeft -= 1;
+
+		if (--g.livesLeft < 0) {
+						// gameover
+						// bring up high score/game over menu
+				} 
+		else {
+		
+			// Move player off screen for a few seconds then bring back
+			gameObject.transform.position = new Vector3(10000,10000,10000);
+
+			timeInvincible = 6.0f;
+			isInvincible = true;
+			
+		}
+	}
+	
 	// Update is called once per frame
 	void Update () {
 
