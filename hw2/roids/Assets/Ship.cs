@@ -9,6 +9,9 @@ public class Ship : MonoBehaviour {
 	public float rotationSpeed;
 	public float rotation;
 	public GameObject bullet; // the GameObject to spawn
+	public float timer;
+	public float timeAtLastBulletFire;
+	public float timeToWaitBetweenShots;
 	
 
 	// Use this for initialization
@@ -16,6 +19,7 @@ public class Ship : MonoBehaviour {
 		// Vector3 default initializes all components to 0.0f forceVector.x = 1.0f;
 		forceVector.x = 5.0f;
 		rotationSpeed = 4.0f;
+		timeToWaitBetweenShots = .25f;  // 1/4 second
 	}
 
 	// forced changes to rigid body physics parameters should be done through the FixedUpdate() method, not the Update() method
@@ -41,22 +45,35 @@ public class Ship : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter(Collider collider) {
+		if ( (collider.tag != "Bullet") && !collider.tag.Contains("Wall") ) {
+
+			Debug.Log (collider.tag);
+					Debug.Log ("Ship got hit");
+
+			//		Destroy(gameObject);
+				}
+		}
+
 	// Update is called once per frame
 	void Update () {
 
 		// Lock y plane to 0 for debugging until I implement ship.die()
 		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
+
+
 		
+		if(Input.GetButtonDown("Fire1") && ( (Time.time - timeAtLastBulletFire) > timeToWaitBetweenShots ) )
 	
-		if(Input.GetButtonDown("Fire1"))
 		{
 			/* we don’t want to spawn a Bullet inside our ship, so some Simple trigonometry is done here to spawn the bullet at the tip of where the ship is pointed.
 */
 			Vector3 spawnPos = gameObject.transform.position;
 
-			spawnPos.x += 1.5f * Mathf.Cos(rotation * Mathf.PI/180);
-			spawnPos.z -= 1.5f * Mathf.Sin(rotation * Mathf.PI/180);
-
+			spawnPos.x += .25f * Mathf.Cos(rotation * Mathf.PI/180);
+			spawnPos.z -= .25f * Mathf.Sin(rotation * Mathf.PI/180);
+			    
 			// instantiate the Bullet
 			GameObject obj = Instantiate(bullet, spawnPos, Quaternion.identity) as GameObject;
 
@@ -65,8 +82,10 @@ public class Ship : MonoBehaviour {
 
 			// set the direction the Bullet will travel in
 			Quaternion rot = Quaternion.Euler(new Vector3(0,rotation,0));
-
 			b.heading = rot;
+
+			timeAtLastBulletFire = Time.time;
+		//	Debug.Log (Time.time);
 //			Debug.Log ("Fire! " + rotation);
 			
 		}

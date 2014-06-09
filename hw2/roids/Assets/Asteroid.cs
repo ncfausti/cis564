@@ -20,6 +20,13 @@ public class Asteroid : MonoBehaviour {
 
 		heading.z = Random.Range (-180.0f, 180.0f);
 		heading.x = Random.Range(0.0f, 360.0f);
+	
+		// Debugging, go right
+		heading.z = 0.0f;
+		heading.x = 0.0f;
+		
+
+
 
 		// set the direction it will travel in
 		gameObject.rigidbody.MoveRotation(heading);
@@ -30,8 +37,8 @@ public class Asteroid : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Lock asteroids to y = 0 plane
-		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-		transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+	//	transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+	//	transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 	}
 
 	public void Die(){

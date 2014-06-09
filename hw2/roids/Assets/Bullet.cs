@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour {
 		// it will not decelerate
 		gameObject.rigidbody.AddRelativeForce (thrust);
 
+		// Remove bullet after 3 seconds
 		Destroy (gameObject, 3.0f);
 	}
 	

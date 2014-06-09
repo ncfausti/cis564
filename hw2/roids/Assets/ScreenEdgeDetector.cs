@@ -27,19 +27,20 @@ public class ScreenEdgeDetector : MonoBehaviour {
 		if(gameObject.CompareTag("TopWall")) {
 			newZ = newZ  * -1 + 1;
 		}
-	
+
+		Debug.Log ("WALL COllision WITH " + collider.tag);
+
+		Debug.Log (newX + " | " + newZ);
+
 		collider.transform.position = new Vector3(newX, 0, newZ);
 
-	//	Debug.Log ("Edge hit detected");
-	//	Debug.Log (Camera.main.ScreenToWorldPoint(collider.transform.position).ToString());
-
 	}
 
-	void OnTriggerExit ( Collider collider) {
-
-	
+	void OnTriggerExit( Collider collider ){
+		Debug.Log (collider.tag + " is now exiting ");
+		Debug.Log (collider.transform.position.x + " | " + collider.transform.position.z);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	
