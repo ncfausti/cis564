@@ -6,6 +6,9 @@ public class Global : MonoBehaviour {
 	public GameObject objToSpawn;
 	public GameObject smallAsteroid;
 	public GameObject ship;
+	public GameObject alienShip;
+	public GameObject mainCamera;
+
 	public float timer;
 	public float spawnPeriod;
 	public int numberSpawnedEachPeriod;
@@ -20,6 +23,9 @@ public class Global : MonoBehaviour {
 	public float height;
 	public float respawnCountdown;
 	public bool justSpawned;
+	public bool spawnedAlien;
+	public float alienTime;
+
 
 	// Use this for initialization
 	void Start () {
@@ -32,7 +38,11 @@ public class Global : MonoBehaviour {
 		respawnCountdown = 4.0f;
 		width = Camera.main.GetScreenWidth ();
 		height = Camera.main.GetScreenHeight ();
+		spawnShip();
 		justSpawned = true;
+		spawnedAlien = false;
+		alienTime = 4.0f;
+
 
 		/*
               So here's a design point to consider:
@@ -44,7 +54,7 @@ public class Global : MonoBehaviour {
 			Camera.main.WorldToScreenPoint(new Vector3(0,0,0));
 
 		startNewLevel(1);
-
+		spawnAlien();
 
 	}
 	// Update is called once per frame
@@ -65,7 +75,12 @@ public class Global : MonoBehaviour {
 		if (totalAsteroids == 0) {
 			startNewLevel (++currentLevel);
 			}
+
+		if(Input.GetButtonDown("Jump")) {
+			Debug.Log ("Going to 3d view");
+
 		}
+	}
 
 	void startNewLevel(int level) {
 
@@ -80,6 +95,27 @@ public class Global : MonoBehaviour {
 				totalAsteroids += 1;
 		}
 
+	}
+
+	void spawnAlien() {
+		int direction = Random.Range (-10, 10) < 0 ? -1 : 1;
+
+		float x = 15.0f * direction;
+
+		// move left to right
+		if (x < 0) {
+				
+		} 
+		// move right to left
+		else {
+				
+		
+		}
+
+		float y = 0;
+		float z = 10.0f;
+		Instantiate (alienShip, new Vector3 (x, y, z), Quaternion.identity);
+		spawnedAlien = true;
 	}
 
 	 void spawnShip() {
@@ -98,8 +134,6 @@ public class Global : MonoBehaviour {
 						Instantiate (smallAsteroid, newPos, Quaternion.identity);
 			totalAsteroids += 1;
 		}
-
-		//Debug.Log (totalAsteroids);
 	}
 }
 

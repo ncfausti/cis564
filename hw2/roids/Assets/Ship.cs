@@ -71,11 +71,12 @@ public class Ship : MonoBehaviour {
 	public void Die(){
 		GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
-		g.livesLeft -= 1;
+		g.livesLeft--;
 
-		if (--g.livesLeft < 0) {
-						// gameover
-						// bring up high score/game over menu
+		if (g.livesLeft < 0) {
+			// gameover
+
+			Debug.Log ("Bringing up high score/game over menu now");
 				} else {
 			g.respawnCountdown = 3.0f;
 			g.justSpawned = false;

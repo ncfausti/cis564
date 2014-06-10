@@ -65,4 +65,16 @@ public class Bullet : MonoBehaviour {
 		}
 
 	}
+
+
+	void OnTriggerEnter(Collider collider) {
+
+		if (collider.tag == "AlienPrefab") {
+			AlienShip aship = collider.gameObject.GetComponent<AlienShip>();
+
+			aship.Die();
+
+		}
+	}
+
 }
