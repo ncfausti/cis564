@@ -75,13 +75,17 @@ public class Ship : MonoBehaviour {
 
 		if (g.livesLeft < 0) {
 			// gameover
-
 			Debug.Log ("Bringing up high score/game over menu now");
-				} else {
+
+
+
+			Application.LoadLevel("GameplayScene");		
+			
+		} 
+		else {
 			g.respawnCountdown = 3.0f;
 			g.justSpawned = false;
-			Destroy(gameObject);
-							
+			Destroy(gameObject);				
 		}
 	}
 

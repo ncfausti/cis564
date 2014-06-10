@@ -47,8 +47,10 @@ public class Bullet : MonoBehaviour {
 			globalObj = g.GetComponent< Global >();
 
 			// If small asteroid, just die() without creating new asteroids, else create 3 new small asteroids
-			if (roid.transform.localScale.x.ToString () != "0.5")
+			if (!roid.name.Contains("SmallAsteroid"))
 				globalObj.spawnAsteroidPiecesAtPosition(roid.transform.localPosition);
+
+			Debug.Log ("ASTEROID IMPACT ****** " + roid.name.Contains("SmallAsteroid"));
 
 			// let the other object handle its own death throes
 			roid.Die ();

@@ -14,7 +14,6 @@ public class Global : MonoBehaviour {
 	public int numberSpawnedEachPeriod;
 	public Vector3 originInScreenCoords;
 	public int score;
-	public int topScore;
 	public int currentLevel;
 	public int totalAsteroids;
 	public int livesLeft;
@@ -27,8 +26,27 @@ public class Global : MonoBehaviour {
 	public float alienTime;
 
 
+	public  int topScore = 34500;
+	public  int secondTopScore = 26130;
+	public  int thirdTopScore = 14700;
+	
+	public void trackScores(int score) {
+		if (score > topScore) 
+			topScore = score;		
+		
+		if (score < topScore && score > secondTopScore)
+			secondTopScore = score;		
+		
+		if (score < secondTopScore && score > thirdTopScore)
+			thirdTopScore = score;
+		
+	}
+
+
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad(gameObject);
+
 		score = 0;
 		timer = 0;
 		spawnPeriod = 2.0f;
@@ -42,6 +60,7 @@ public class Global : MonoBehaviour {
 		justSpawned = true;
 		spawnedAlien = false;
 		alienTime = 4.0f;
+		topScore = 38620;
 
 
 		/*
@@ -73,6 +92,7 @@ public class Global : MonoBehaviour {
 
 		// if all asteroids are gone, increment level and spawn "level" many asteroids
 		if (totalAsteroids == 0) {
+
 			startNewLevel (++currentLevel);
 			}
 
@@ -83,6 +103,10 @@ public class Global : MonoBehaviour {
 	}
 
 	void startNewLevel(int level) {
+
+		// TODO: make ship invincible while spawning new asteroids
+
+
 
 		for (int i = 0; i < level; i++) {
 
@@ -135,6 +159,13 @@ public class Global : MonoBehaviour {
 			totalAsteroids += 1;
 		}
 	}
+
+	public void trackTopScores(){
+		// keep track of all top scores here
+
+
+	}
+
 }
 
 
