@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GameOverScript : MonoBehaviour {
 
 
-	public GUIText first;
-	public GUIText second;
-	public GUIText third;
+	public GUIText highScores;
 
 	public string name;
+	private bool saveClicked = false;
 
 	public GameObject globalObj;
 	Global g;
@@ -25,11 +26,37 @@ public class GameOverScript : MonoBehaviour {
 		third.text = g.thirdPlayer + "  " + g.thirdTopScore.ToString();
 		*/
 
-		for (int i = 0; i < 10; i++) {
-					
-		}
+		displayScores ();
 
 	}
+
+	public void displayScores(){
+		// list out top scores with player's names
+		
+		List<KeyValuePair<string, int>> highScoresList = g.scores.ToList();
+		
+		highScoresList.Sort(
+			delegate(KeyValuePair<string, int> firstPair, KeyValuePair<string, int> nextPair)
+			{
+			return firstPair.Value.CompareTo(nextPair.Value);
+			}
+		);
+
+		// for top three items in sorted dictionary create GUIText Objects and draw to screen with name + score
+		// if there aren't three scores use _ _ _ _  -  0 as filler
+		
+		foreach(KeyValuePair<string, int> entry in highScoresList)
+		{
+			//GameObject go = new GameObject(entry.Key + entry.Value);
+			//go.AddComponent(typeof(GUIText));
+		//	Debug.Log (entry.Key + " | " + entry.Value.ToString());
+
+			highScores.text += entry.Key + "   " + entry.Value.ToString() + "\n";
+
+		}
+		
+	}
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -39,7 +66,7 @@ public class GameOverScript : MonoBehaviour {
 	void OnGUI() {
 		GUILayout.BeginArea (new Rect(10, Screen.height / 2 + 100, Screen.width -10, 200));
 
-		name = GUI.TextField(new Rect(100, 100, 200, 20), name, 25);
+		name = GUI.TextField(new Rect(400, 100, 200, 40), name, 25);
 
 
 		// Load the main scene
@@ -61,11 +88,17 @@ public class GameOverScript : MonoBehaviour {
 			//Debug.Log ("You should implement a high score screen.");	
 		}
 		*/
-		if(GUILayout.Button("Save Score")){
-			Global g = globalObj.GetComponent<Global>();
-			g.scores.Add(name, g.score);
-			Debug.Log("PLAYER " + name + " scored " + g.scores[name]  + " points");
-		}
+		if (!saveClicked) {
+						if (GUILayout.Button ("Save Score")) {
+								saveClicked = true;
+								Global g = globalObj.GetComponent<Global> ();
+								g.trackScores (name, g.score);
+								//	Debug.Log("PLAYER " + name + " scored " + g.scores[name]  + " points");
+								//	Destroy(GUILayout.Button("Save Score"));
+
+								displayScores ();
+						}
+				}
 
 
 
@@ -73,6 +106,8 @@ public class GameOverScript : MonoBehaviour {
 			Application.Quit();
 			Debug.Log ("Application.Quit() only works in build, not in editor");
 		}
+
+
 
 		GUILayout.EndArea ();
 		
