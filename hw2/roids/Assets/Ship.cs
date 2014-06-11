@@ -30,6 +30,12 @@ public class Ship : MonoBehaviour {
 	// forced changes to rigid body physics parameters should be done through the FixedUpdate() method, not the Update() method
 	void FixedUpdate()
 	{
+
+		// Keep ship locked at 270 degrees to make more like space invaders
+
+		Quaternion q = Quaternion.Euler (new Vector3 (0, 270, 0));
+		gameObject.transform.rotation = q;
+
 		timeInvincible -= Time.deltaTime;
 
 		if(timeInvincible <= 0.0f) {
@@ -44,16 +50,37 @@ public class Ship : MonoBehaviour {
 		}
 		if( Input.GetAxisRaw("Horizontal") > 0 )
 		{
-			rotation += rotationSpeed;
-			Quaternion rot = Quaternion.Euler(new Vector3(0,rotation,0));
-			gameObject.rigidbody.MoveRotation(rot); 
+		//	rotation += rotationSpeed;
+		//	Quaternion rot = Quaternion.Euler(new Vector3(0,rotation,0));
+		
+		//	gameObject.rigidbody.MovePosition(Vector3(5,0,0));
 			//gameObject.transform.Rotate(0, 2.0f, 0.0f );
+
+
+			// Use this for laggy horizontal thrust
+//			forceVector.x = 0.0f;
+//			forceVector.z = -100.0f;
+//			gameObject.rigidbody.AddRelativeForce(forceVector);
+//
+			// Use this for precise horz thrust
+			transform.position = new Vector3(transform.position.x + .5f, 0, transform.position.z);
+			
+			
 		}
 		else if( Input.GetAxisRaw("Horizontal") < 0 ) {
-			rotation -= rotationSpeed;
-			Quaternion rot = Quaternion.Euler(new Vector3(0,rotation,0));
-			gameObject.rigidbody.MoveRotation(rot); 
-			//gameObject.transform.Rotate(0, -2.0f, 0.0f );
+		//	rotation -= rotationSpeed;
+		//	Quaternion rot = Quaternion.Euler(new Vector3(0,rotation,0));
+
+		//	gameObject.rigidbody.MoveRotation(rot); 
+		//	gameObject.transform.position(Vector3(transform.position+3,0,0));
+
+//
+//			forceVector.x = 0.0f;
+//			forceVector.z = 100.0f;
+//			gameObject.rigidbody.AddRelativeForce(forceVector);
+
+			transform.position = new Vector3(transform.position.x - .5f, 0, transform.position.z);
+			
 		}
 	}
 
@@ -119,7 +146,11 @@ public class Ship : MonoBehaviour {
 			Bullet b = obj.GetComponent<Bullet>();
 
 			// set the direction the Bullet will travel in
-			Quaternion rot = Quaternion.Euler(new Vector3(0,rotation,0));
+
+			// just use 270 to only allow for shooting up
+			Quaternion rot = Quaternion.Euler(new Vector3(0,270,0));
+
+			//
 			b.heading = rot;
 
 			timeAtLastBulletFire = Time.time;

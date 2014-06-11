@@ -17,42 +17,43 @@ public class GameOverScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		globalObj = GameObject.Find("GlobalObject");
-		g = globalObj.GetComponent<Global>();
-
 		/*
 		first.text = g.topPlayer + "hi  " + g.topScore.ToString();
 		second.text = g.secondPlayer + "  " + g.secondTopScore.ToString();
 		third.text = g.thirdPlayer + "  " + g.thirdTopScore.ToString();
 		*/
 
-		displayScores ();
+			displayScores ();
+		
 
 	}
 
 	public void displayScores(){
 		// list out top scores with player's names
-		
-		List<KeyValuePair<string, int>> highScoresList = g.scores.ToList();
-		
-		highScoresList.Sort(
-			delegate(KeyValuePair<string, int> firstPair, KeyValuePair<string, int> nextPair)
-			{
-			return firstPair.Value.CompareTo(nextPair.Value);
-			}
-		);
 
-		// for top three items in sorted dictionary create GUIText Objects and draw to screen with name + score
-		// if there aren't three scores use _ _ _ _  -  0 as filler
+		if (GameObject.Find ("GlobalObject") != null) {
+						globalObj = GameObject.Find ("GlobalObject");
+						g = globalObj.GetComponent<Global> ();
+
+						List<KeyValuePair<string, int>> highScoresList = g.scores.ToList ();
 		
-		foreach(KeyValuePair<string, int> entry in highScoresList)
-		{
-			//GameObject go = new GameObject(entry.Key + entry.Value);
-			//go.AddComponent(typeof(GUIText));
-		//	Debug.Log (entry.Key + " | " + entry.Value.ToString());
+						highScoresList.Sort (
+			delegate(KeyValuePair<string, int> firstPair, KeyValuePair<string, int> nextPair) {
+								return firstPair.Value.CompareTo (nextPair.Value);
+						}
+						);
 
-			highScores.text += entry.Key + "   " + entry.Value.ToString() + "\n";
+						// for top three items in sorted dictionary create GUIText Objects and draw to screen with name + score
+						// if there aren't three scores use _ _ _ _  -  0 as filler
+		
+						foreach (KeyValuePair<string, int> entry in highScoresList) {
+								//GameObject go = new GameObject(entry.Key + entry.Value);
+								//go.AddComponent(typeof(GUIText));
+								//	Debug.Log (entry.Key + " | " + entry.Value.ToString());
 
+								highScores.text += entry.Key + "   " + entry.Value.ToString () + "\n";
+
+						}
 		}
 		
 	}
@@ -79,6 +80,8 @@ public class GameOverScript : MonoBehaviour {
 			g.livesLeft = 3;
 			g.score = 0;
 			g.timer = 0;
+			g.totalAsteroids = 1;
+			g.currentLevel = 1;
 
 			Application.LoadLevel("GameplayScene");		
 		}

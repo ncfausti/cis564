@@ -10,6 +10,8 @@ public class Global : MonoBehaviour {
 	public GameObject ship;
 	public GameObject alienShip;
 	public GameObject mainCamera;
+	public GameObject bullet;
+	public GameObject alienBullet;
 
 	public float timer;
 	public float spawnPeriod;
@@ -26,13 +28,16 @@ public class Global : MonoBehaviour {
 	public bool justSpawned;
 	public bool spawnedAlien;
 	public float alienTime;
+	public float alienTimer;
 	public bool prevGamePlayed;
-
 	public  int topScore = 0;
 	public string topPlayer = "";
-
+	public int alienSpawnPeriod;
 	public  int secondTopScore = 0;
 	public string secondPlayer = "";
+
+	public Camera cam1;
+	public Camera cam2;
 
 	public  int thirdTopScore = 0;
 	public string thirdPlayer = "";
@@ -57,41 +62,31 @@ public class Global : MonoBehaviour {
 		
 	}
 
-	public void displayScores(){
-		// list out top scores with player's names
-
-		List<KeyValuePair<string, int>> highScoresList = scores.ToList();
-		
-		highScoresList.Sort(
-			delegate(KeyValuePair<string, int> firstPair,
-		         KeyValuePair<string, int> nextPair)
-			{
-			return firstPair.Value.CompareTo(nextPair.Value);
-		}
-		);
-
-	}
 
 
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad(gameObject);
 
+		cam1.enabled = true;
+		cam2.enabled = false;
 
 
 		score = 0;
 		timer = 0;
 		spawnPeriod = 2.0f;
 		numberSpawnedEachPeriod = 15;
-		currentLevel = 1;
-		livesLeft = 0;
+		currentLevel = 0;
+		livesLeft = 3	;
 		respawnCountdown = 4.0f;
 		width = Camera.main.GetScreenWidth ();
 		height = Camera.main.GetScreenHeight ();
 		spawnShip();
 		justSpawned = true;
 		spawnedAlien = false;
-		alienTime = 4.0f;
+		alienSpawnPeriod = 15;
+		alienTimer = 0.0f;
+		totalAsteroids = 0;
 
 
 
@@ -105,7 +100,7 @@ public class Global : MonoBehaviour {
 			Camera.main.WorldToScreenPoint(new Vector3(0,0,0));
 
 		startNewLevel(1);
-		spawnAlien();
+		//spawnAlien();
 
 	}
 	// Update is called once per frame
@@ -114,6 +109,14 @@ public class Global : MonoBehaviour {
 				if (timer > spawnPeriod) {
 						timer = 0;
 				}
+
+		alienTimer += Time.deltaTime;
+		if(alienTimer > alienSpawnPeriod){
+			spawnAlien();
+			alienTimer = 0;
+		}
+
+
 		// Respawn
 
 		if (respawnCountdown < 4.0f)
@@ -124,13 +127,12 @@ public class Global : MonoBehaviour {
 
 		// if all asteroids are gone, increment level and spawn "level" many asteroids
 		if (totalAsteroids == 0) {
-
 			startNewLevel (++currentLevel);
 			}
 
-		if(Input.GetButtonDown("Jump")) {
-			Debug.Log ("Going to 3d view");
-
+		if(Input.GetButtonDown("C")) {
+			cam1.enabled = !cam1.enabled;
+			cam2.enabled = !cam2.enabled;
 		}
 	}
 
@@ -177,7 +179,7 @@ public class Global : MonoBehaviour {
 	 void spawnShip() {
 
 		Debug.Log ("SPAWNING SHIPPPP!!!!!");
-		Instantiate (ship, new Vector3 (0, 0, 0), Quaternion.identity);
+		Instantiate (ship, new Vector3 (-10, 0, -10), Quaternion.identity);
 	}
 
 	public void spawnAsteroidPiecesAtPosition(Vector3 position) {
@@ -190,12 +192,6 @@ public class Global : MonoBehaviour {
 						Instantiate (smallAsteroid, newPos, Quaternion.identity);
 			totalAsteroids += 1;
 		}
-	}
-
-	public void trackTopScores(){
-		// keep track of all top scores here
-
-
 	}
 
 }

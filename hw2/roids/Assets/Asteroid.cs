@@ -16,7 +16,7 @@ public class Asteroid : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		pointValue = 10;
-		speed.x = 50.0f;
+		speed.x = 200.0f;
 
 		heading.z = Random.Range (-180.0f, 180.0f);
 		heading.x = Random.Range(0.0f, 360.0f);

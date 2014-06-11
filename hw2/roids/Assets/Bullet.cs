@@ -7,11 +7,10 @@ public class Bullet : MonoBehaviour {
 	public Quaternion heading;
 	public Vector3 origin = Camera.main.WorldToScreenPoint(new Vector3(0,0,0));
 	Global globalObj;
-	
-
 
 	// Use this for initialization
 	void Start () {
+
 		// travel straight in the X-axis
 		thrust.x = 700.0f;
 
@@ -43,20 +42,24 @@ public class Bullet : MonoBehaviour {
 		if ( collider.CompareTag("Asteroids") ){
 			Asteroid roid = collider.gameObject.GetComponent< Asteroid >();
 
-			GameObject g = GameObject.Find ("GlobalObject");
-			globalObj = g.GetComponent< Global >();
 
-			// If small asteroid, just die() without creating new asteroids, else create 3 new small asteroids
-			if (!roid.name.Contains("SmallAsteroid"))
-				globalObj.spawnAsteroidPiecesAtPosition(roid.transform.localPosition);
+			if(GameObject.Find("GlobalObject") != null){
+				GameObject g = GameObject.Find ("GlobalObject");
+				globalObj = g.GetComponent< Global >();
 
-			Debug.Log ("ASTEROID IMPACT ****** " + roid.name.Contains("SmallAsteroid"));
+				// If small asteroid, just die() without creating new asteroids, else create 3 new small asteroids
+				if (!roid.name.Contains("SmallAsteroid"))
+					globalObj.spawnAsteroidPiecesAtPosition(roid.transform.localPosition);
 
-			// let the other object handle its own death throes
-			roid.Die ();
+				Debug.Log ("ASTEROID IMPACT ****** " + roid.name.Contains("SmallAsteroid"));
 
-			// Destroy the Bulletwhich collided with the Asteroid
-			Destroy (gameObject);
+				// let the other object handle its own death throes
+				roid.Die ();
+
+				// Destroy the Bulletwhich collided with the Asteroid
+				Destroy (gameObject);
+
+			}
 		}
 		else {
 			// if we collided with something else, print to console
