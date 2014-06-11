@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Global : MonoBehaviour {
 
@@ -24,22 +26,50 @@ public class Global : MonoBehaviour {
 	public bool justSpawned;
 	public bool spawnedAlien;
 	public float alienTime;
+	public bool prevGamePlayed;
 
+	public  int topScore = 0;
+	public string topPlayer = "";
 
-	public  int topScore = 34500;
-	public  int secondTopScore = 26130;
-	public  int thirdTopScore = 14700;
+	public  int secondTopScore = 0;
+	public string secondPlayer = "";
+
+	public  int thirdTopScore = 0;
+	public string thirdPlayer = "";
+
+	public  Dictionary<string, int> scores = new Dictionary<string,int>();
+
 	
-	public void trackScores(int score) {
-		if (score > topScore) 
-			topScore = score;		
+	public void trackScores(string player, int score) {
+
+		int dupPlayer = 0;
+
+		// if player name already in scores dictionary, append number to end, eg. nick, nick1, nick2
+		bool containsKey = scores.ContainsKey (player);
+
+		while (containsKey) {
+			dupPlayer += 1;
+			player = player + dupPlayer.ToString();
+			containsKey = scores.ContainsKey(player);
+		}
+
+		scores.Add(player, score);
 		
-		if (score < topScore && score > secondTopScore)
-			secondTopScore = score;		
+	}
+
+	public void displayScores(){
+		// list out top scores with player's names
+
+		List<KeyValuePair<string, int>> highScoresList = scores.ToList();
 		
-		if (score < secondTopScore && score > thirdTopScore)
-			thirdTopScore = score;
-		
+		highScoresList.Sort(
+			delegate(KeyValuePair<string, int> firstPair,
+		         KeyValuePair<string, int> nextPair)
+			{
+			return firstPair.Value.CompareTo(nextPair.Value);
+		}
+		);
+
 	}
 
 
@@ -47,12 +77,14 @@ public class Global : MonoBehaviour {
 	void Start () {
 		DontDestroyOnLoad(gameObject);
 
+
+
 		score = 0;
 		timer = 0;
 		spawnPeriod = 2.0f;
 		numberSpawnedEachPeriod = 15;
 		currentLevel = 1;
-		livesLeft = 3;
+		livesLeft = 0;
 		respawnCountdown = 4.0f;
 		width = Camera.main.GetScreenWidth ();
 		height = Camera.main.GetScreenHeight ();
@@ -60,7 +92,7 @@ public class Global : MonoBehaviour {
 		justSpawned = true;
 		spawnedAlien = false;
 		alienTime = 4.0f;
-		topScore = 38620;
+
 
 
 		/*

@@ -60,13 +60,14 @@ public class Ship : MonoBehaviour {
 	void OnTriggerEnter(Collider collider) {
 		if ( (collider.tag != "Bullet") && !collider.tag.Contains("Wall") ) {
 
-				Debug.Log (collider.tag);
-				Debug.Log ("Ship got hit");
-				
-				if(!isInvincible)
-					Die();
-				}
-		}
+			Debug.Log (collider.tag);
+			Debug.Log ("Ship got hit");
+			
+			if(!isInvincible)
+				Die();
+			}
+	}
+
 
 	public void Die(){
 		GameObject obj = GameObject.Find("GlobalObject");
@@ -77,9 +78,7 @@ public class Ship : MonoBehaviour {
 			// gameover
 			Debug.Log ("Bringing up high score/game over menu now");
 
-
-
-			Application.LoadLevel("GameplayScene");		
+			Application.LoadLevel("GameOverScreen");		
 			
 		} 
 		else {

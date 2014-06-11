@@ -45,6 +45,7 @@ public class AlienShip : MonoBehaviour {
 		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 		
 		timeAlive -= Time.deltaTime;
+
 		if (timeAlive < 0) {
 			Destroy(gameObject);		
 		}
@@ -72,14 +73,13 @@ public class AlienShip : MonoBehaviour {
 			goUpLimit = moveLimit;
 			goDownLimit = moveLimit;
 			}	
-
 	}
 	
 	void OnTriggerEnter(Collider collider) {
 		if ( !collider.tag.Contains("Wall") && collider.tag != "Asteroids" ) {
 			
 			Debug.Log (collider.tag);
-			Debug.Log ("Ship got hit by my bullet");
+			Debug.Log ("ALIEN  **   *** *** Ship got hit by my bullet");
 			
 
 				//Die();
@@ -87,19 +87,19 @@ public class AlienShip : MonoBehaviour {
 	}
 	
 	public void Die(){
-		GameObject obj = GameObject.Find("GlobalObject");
-		Global g = obj.GetComponent<Global>();
-		g.livesLeft -= 1;
+	//	GameObject obj = GameObject.Find("GlobalObject");
+	//		Global g = obj.GetComponent<Global>();
+		//g.livesLeft -= 1;
 		
-		if (--g.livesLeft < 0) {
+	//	if (--g.livesLeft < 0) {
 			// gameover
 			// bring up high score/game over menu
-		} else {
-			g.respawnCountdown = 3.0f;
-			g.justSpawned = false;
+	//	} else {
+	//		g.respawnCountdown = 3.0f;
+	//		g.justSpawned = false;
 			Destroy(gameObject);
 			
-		}
+
 	}
 	
 	//void OnCollisionEnter(Collision collision) {
